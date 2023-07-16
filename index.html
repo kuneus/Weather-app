@@ -6,18 +6,43 @@
   </head>
   <body>
     <div id="app"></div>
-    <header id="header">
-      <div>The Weatherest</div>
-      <div>
-        <input type="search" placeholder="Enter location" />
-        <button id="search-submit">Search</button>
+    <!-- **** HEADER **** -->
+    <header>
+      <div>Weatherest</div>
+      <div id="search-container">
+        <input type="search" id="search-input" placeholder="Enter location" />
+        <button id="search-btn">Search</button>
       </div>
       <div>
-        <button id="toggle-temp"><span>°C</span><span>°F</span></button>
+        <button id="toggle-temp"><span>°C</span> <span>°F</span></button>
       </div>
     </header>
-    <div id="main"></div>
-    <footer id="footer"></footer>
+    <!-- **** MAIN **** -->
+    <div id="main">
+      <div id="current-container">
+        <div id="current-header">
+          <div id="current-location">current-location</div>
+          <div id="current-country">current-country</div>
+          <div id="current-time">current-time</div>
+        </div>
+        <div id="current-display">
+          <div id="temp-now">temp-now</div>
+          <div>
+            <span id="current-high">current-high</span>
+            <span id="current-low">current-low</span>
+          </div>
+          <div id="current-info">current-info</div>
+        </div>
+      </div>
+      <div id="hourly-container">
+        <!-- dynamically add DOM elements? -->
+      </div>
+      <div id="daily-container">
+        <!-- dynamically add DOM elements? -->
+      </div>
+    </div>
+    <!-- **** FOOTER **** -->
+    <footer></footer>
     <script src="bundle.js"></script>
   </body>
 </html>
