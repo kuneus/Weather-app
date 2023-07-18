@@ -1,6 +1,11 @@
 import "./styles.css";
 import { loadPageData } from "./loadPageData";
-import { changeTempUnit, changeTempBtn } from "./pageFunctions";
+import {
+  changeTempUnit,
+  changeTempBtn,
+  changeWindUnit,
+  changeWindValue,
+} from "./pageFunctions";
 
 const searchInput = document.getElementById("search-input");
 const searchBtn = document.getElementById("search-btn");
@@ -16,12 +21,15 @@ searchBtn.addEventListener("click", async () => {
 
 const currentPageInfo = {
   tempUnit: "",
+  windUnit: "",
 };
 
 // change temp to celsius or fahrenheit
 toggleTemp.addEventListener("click", () => {
   changeTempUnit();
   changeTempBtn();
+  changeWindValue();
+  changeWindUnit();
 });
 
 export { currentPageInfo };

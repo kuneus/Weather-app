@@ -18,6 +18,10 @@ const currentHigh = document.getElementById("current-high");
 const currentLow = document.getElementById("current-low");
 const currentInfo = document.getElementById("current-info");
 const feelsLike = document.getElementById("feels-like");
+const currentHumidity = document.getElementById("current-humidity");
+const currentWind = document.getElementById("current-wind");
+const windUnit = document.getElementById("wind-unit");
+const windDirection = document.getElementById("wind-direction");
 
 // fetch weather data from weather API
 const getData = async (place) => {
@@ -68,6 +72,19 @@ const setTemp = async (data, tempType) => {
   }
 };
 
+const getWindspeed = async (data) => {
+  if (currentPageInfo.tempUnit === "f") {
+    // if tempUnit is Fahrenheit, then use miles
+    currentPageInfo.windUnit = "mph";
+    return await data.wind_mph;
+  } else {
+    // if tempUnit is celsius, then use kilometers
+    currentPageInfo.windUnit = "kph";
+    return await data.wind_kph;
+  }
+};
+
+// loads data for current weather
 const loadCurrentData = async (weatherObj) => {
   // Display name of location and region
   currentLocation.textContent =
@@ -129,10 +146,27 @@ const loadCurrentData = async (weatherObj) => {
   );
 
   // current condition
-  currentInfo.textContent = await weatherObj.forecast.forecastday[0].day
-    .condition.text;
+  currentInfo.textContent = await weatherObj.current.condition.text;
 
+  // feels like
   feelsLike.textContent = await setTemp(weatherObj.current, "feelslike");
+
+  // humidity
+  currentHumidity.textContent = await weatherObj.current.humidity;
+
+  // wind in mph or kph
+  currentWind.textContent = await getWindspeed(weatherObj.current);
+
+  // wind unit
+  windUnit.textContent = currentPageInfo.windUnit;
+
+  // wind direction
+  windDirection.textContent = " " + (await weatherObj.current.wind_dir);
+};
+
+const loadHourlyData = async (weatherObj) => {
+  // function to create hourly elements
+  // create loop to loop through hourly elements and update each element
 };
 
 const loadPageData = async (place) => {
