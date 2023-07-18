@@ -14,7 +14,10 @@
         <button id="search-btn">Search</button>
       </div>
       <div>
-        <button id="toggle-temp"><span>°C</span> <span>°F</span></button>
+        <button id="toggle-temp">
+          <span id="celsius-span">°C</span>
+          <span id="fahrenheit-span">°F</span>
+        </button>
       </div>
     </header>
     <!-- **** MAIN **** -->
@@ -23,15 +26,23 @@
         <div id="current-header">
           <div id="current-location">current-location</div>
           <div id="current-country">current-country</div>
+          <div id="current-date">current-date</div>
           <div id="current-time">current-time</div>
         </div>
         <div id="current-display">
-          <div id="temp-now">temp-now</div>
-          <div>
-            <span id="current-high">current-high</span>
-            <span id="current-low">current-low</span>
+          <div id="temp-now" class="temp-unit">temp-now</div>
+          <div id="current-highlow">
+            <div>
+              H: <span id="current-high" class="temp-unit">current-high</span>
+            </div>
+            <div>
+              L: <span id="current-low" class="temp-unit">current-low</span>
+            </div>
           </div>
           <div id="current-info">current-info</div>
+          <div id="feels-like-cont">
+            Feels like <span id="feels-like" class="temp-unit"></span>
+          </div>
         </div>
       </div>
       <div id="hourly-container">

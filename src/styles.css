@@ -130,6 +130,47 @@ header {
 /* <---- MAIN ----> */
 /* **************** */
 
+#current-container {
+  border: 1px solid #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#current-header {
+  border: 1px solid red;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+#current-date,
+#current-time {
+  font-size: 1.5rem;
+}
+
+#current-display {
+  border: 1px solid blue;
+  display: grid;
+  grid-template: auto auto auto / 120px;
+  align-content: center;
+  gap: 5px;
+}
+
+#temp-now {
+  font-size: 5rem;
+  display: flex;
+  justify-content: center;
+}
+
+#current-highlow {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  border: 1px solid #000;
+}
+
 /* ****************** */
 /* <---- FOOTER ----> */
 /* ****************** */

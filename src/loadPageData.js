@@ -4,21 +4,20 @@ Get functions retrieve all relevant data
 Load functions load the retrieved data to the DOM
 
 */
+import format from "date-fns/format";
+import { currentPageInfo } from "./index.js";
+import { changeTempBtn } from "./pageFunctions.js";
 
 // DOM elements
-const searchInput = document.getElementById("search-input");
 const currentLocation = document.getElementById("current-location");
 const currentCountry = document.getElementById("current-country");
 const currentTime = document.getElementById("current-time");
+const currentDate = document.getElementById("current-date");
 const tempNow = document.getElementById("temp-now");
 const currentHigh = document.getElementById("current-high");
 const currentLow = document.getElementById("current-low");
 const currentInfo = document.getElementById("current-info");
-
-// const pageInfo = {
-//   currentLocation: "",
-//   currentTime: "",
-// };
+const feelsLike = document.getElementById("feels-like");
 
 // fetch weather data from weather API
 const getData = async (place) => {
@@ -36,27 +35,63 @@ const getData = async (place) => {
   }
 };
 
-const loadCurrentData = async (place) => {
-  // variable for returned data object
-  const retrievedLocation = await getData(place);
+// gets temp unit data for F or C depending on the country input
+const setTemp = async (data, tempType) => {
+  if (currentPageInfo.tempUnit === "f") {
+    // if tempUnit is Fahrenheit
+    switch (tempType) {
+      case "temp":
+        return await data.temp_f;
+      case "maxtemp":
+        return await data.maxtemp_f;
+      case "mintemp":
+        return await data.mintemp_f;
+      case "avgtemp":
+        return await data.avgtemp_f;
+      case "feelslike":
+        return await data.feelslike_f;
+    }
+  } else {
+    // if tempUnit is celsius
+    switch (tempType) {
+      case "temp":
+        return await data.temp_c;
+      case "maxtemp":
+        return await data.maxtemp_c;
+      case "mintemp":
+        return await data.mintemp_c;
+      case "avgtemp":
+        return await data.avgtemp_c;
+      case "feelslike":
+        return await data.feelslike_c;
+    }
+  }
+};
 
+const loadCurrentData = async (weatherObj) => {
   // Display name of location and region
   currentLocation.textContent =
-    (await retrievedLocation.location.name) +
+    (await weatherObj.location.name) +
     ", " +
-    (await retrievedLocation.location.region);
+    (await weatherObj.location.region);
 
   // country
-  currentCountry.textContent = await retrievedLocation.location.country;
+  currentCountry.textContent = await weatherObj.location.country;
+
+  // get date and time then format it
+  const dateAndTime = new Date(await weatherObj.location.localtime);
+  const formattedTime = format(dateAndTime, "h:mmaaa");
+  const formattedDate = format(dateAndTime, "MMMM dd, yyyy");
 
   // display location date and time
-  currentTime.textContent = await retrievedLocation.location.localtime;
+  currentTime.textContent = formattedTime;
+  currentDate.textContent = formattedDate;
 
-  let tempUnit = false;
   // sets temperature unit to F for countries that primarily use F
   // or sets to C for all other countries
-  switch (await retrievedLocation.location.country) {
+  switch (await weatherObj.location.country) {
     case "United States of America":
+    case "USA":
     case "Bahamas":
     case "Liberia":
     case "Antigua and Barbuda":
@@ -70,63 +105,42 @@ const loadCurrentData = async (place) => {
     case "Saint Kitts and Nevis":
     case "Cyprus":
     case "Turks and Caicos Islands":
-      console.log("this country has a silly measurement system");
-      tempUnit = true;
+      currentPageInfo.tempUnit = "f";
+      changeTempBtn();
       break;
     default:
-      console.log("this is a country with a sensible measurement system");
-      tempUnit = false;
+      currentPageInfo.tempUnit = "c";
+      changeTempBtn();
   }
 
-  // sets temp unit to F or C depending on whether above block declared
-  // tempUnit to true or false
-  const setTemp = async (data, tempType) => {
-    if (tempUnit === true) {
-      switch (tempType) {
-        case "temp":
-          return await data.temp_f;
-        case "maxtemp":
-          return await data.maxtemp_f;
-        case "mintemp":
-          return await data.mintemp_f;
-        case "avgtemp":
-          return await data.avgtemp_f;
-      }
-    } else {
-      switch (tempType) {
-        case "temp":
-          return await data.temp_c;
-        case "maxtemp":
-          return await data.maxtemp_c;
-        case "mintemp":
-          return await data.mintemp_c;
-        case "avgtemp":
-          return await data.avgtemp_c;
-      }
-    }
-  };
-
   // current temperature
-  tempNow.textContent = await setTemp(retrievedLocation.current, "temp");
+  tempNow.textContent = await setTemp(weatherObj.current, "temp");
 
   // today's high
-  currentHigh.textContent =
-    "H:" +
-    (await setTemp(retrievedLocation.forecast.forecastday[0].day, "maxtemp"));
+  currentHigh.textContent = await setTemp(
+    weatherObj.forecast.forecastday[0].day,
+    "maxtemp",
+  );
 
   // today's low
-  currentLow.textContent =
-    "L:" +
-    (await setTemp(retrievedLocation.forecast.forecastday[0].day, "mintemp"));
+  currentLow.textContent = await setTemp(
+    weatherObj.forecast.forecastday[0].day,
+    "mintemp",
+  );
 
   // current condition
-  currentInfo.textContent = await retrievedLocation.forecast.forecastday[0].day
+  currentInfo.textContent = await weatherObj.forecast.forecastday[0].day
     .condition.text;
+
+  feelsLike.textContent = await setTemp(weatherObj.current, "feelslike");
 };
 
 const loadPageData = async (place) => {
+  // variable for returned weather data object
+  const weatherData = await getData(place);
+
   // load data for "current" container
-  await loadCurrentData(place);
+  await loadCurrentData(weatherData);
 
   // load data for "hourly" container
 
