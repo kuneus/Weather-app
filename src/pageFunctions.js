@@ -7,6 +7,23 @@ const fahrenheitSpan = document.getElementById("fahrenheit-span");
 const currentWind = document.getElementById("current-wind");
 const windUnit = document.getElementById("wind-unit");
 
+// function for creating and appending new elements
+const createAndAppend = (el, elId, elClass, elParent) => {
+  let element = document.createElement(el);
+
+  if (elId) {
+    element.setAttribute("id", elId);
+  }
+
+  if (elClass) {
+    element.setAttribute("class", elClass);
+  }
+
+  elParent.appendChild(element);
+
+  return element;
+};
+
 // changes temperature unit to Fahrenheit or Celsius
 const changeTempUnit = () => {
   for (let i = 0; i < arrOfTemps.length; i += 1) {
@@ -63,15 +80,35 @@ const changeTempBtn = () => {
   if (currentPageInfo.tempUnit === "f") {
     fahrenheitSpan.style.fontWeight = "800";
     fahrenheitSpan.style.fontSize = "1.1rem";
+    // fahrenheitSpan.style.border = "solid 1px black";
+    // fahrenheitSpan.style.borderRadius = "10px";
+    // fahrenheitSpan.style.padding = "5px";
+
     celsiusSpan.style.fontSize = "1rem";
     celsiusSpan.style.fontWeight = "250";
+    // celsiusSpan.style.borderRadius = "";
+    // celsiusSpan.style.padding = "0px";
+    // celsiusSpan.style.border = "none";
   } else {
     fahrenheitSpan.style.fontWeight = "250";
     fahrenheitSpan.style.fontSize = "1rem";
+    // fahrenheitSpan.style.border = "none";
+    // fahrenheitSpan.style.borderRadius = "";
+    // fahrenheitSpan.style.padding = "0px";
+
     celsiusSpan.style.fontSize = "1.1rem";
     celsiusSpan.style.fontWeight = "800";
+    // celsiusSpan.style.borderRadius = "10px";
+    // celsiusSpan.style.padding = "5px";
+    // celsiusSpan.style.border = "solid 1px black";
   }
 };
 
 // setBackground function to change BG based on time and weather
-export { changeTempUnit, changeTempBtn, changeWindUnit, changeWindValue };
+export {
+  createAndAppend,
+  changeTempUnit,
+  changeTempBtn,
+  changeWindUnit,
+  changeWindValue,
+};

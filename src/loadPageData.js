@@ -8,7 +8,7 @@ import format from "date-fns/format";
 import { currentPageInfo } from "./index.js";
 import { changeTempBtn } from "./pageFunctions.js";
 
-// DOM elements
+// DOM elements for current data
 const currentLocation = document.getElementById("current-location");
 const currentCountry = document.getElementById("current-country");
 const currentTime = document.getElementById("current-time");
@@ -22,6 +22,28 @@ const currentHumidity = document.getElementById("current-humidity");
 const currentWind = document.getElementById("current-wind");
 const windUnit = document.getElementById("wind-unit");
 const windDirection = document.getElementById("wind-direction");
+const currentRain = document.getElementById("current-rain");
+const currentUV = document.getElementById("current-uv");
+// DOM elements for hourly data
+const hourlyTime = document.getElementsByClassName("hourly-time");
+const hourlyTimeArr = Array.from(hourlyTime);
+const hourlyTemp = document.getElementsByClassName("hourly-temp");
+const hourlyTempArr = Array.from(hourlyTemp);
+const hourlyRain = document.getElementsByClassName("hourly-rain-chance");
+const hourlyRainArr = Array.from(hourlyRain);
+const hourlyIcon = document.getElementsByClassName("hourly-icon");
+const hourlyIconArr = Array.from(hourlyIcon);
+// DOM elements for daily data
+const dayOfWeek = document.getElementsByClassName("day-of-week");
+const dayOfWeekArr = Array.from(dayOfWeek);
+const dailyTempHigh = document.getElementsByClassName("daily-temp-high");
+const dailyTempHighArr = Array.from(dailyTempHigh);
+const dailyTempLow = document.getElementsByClassName("daily-temp-low");
+const dailyTempLowArr = Array.from(dailyTempLow);
+const dailyIcon = document.getElementsByClassName("daily-icon");
+const dailyIconArr = Array.from(dailyIcon);
+const dailyRain = document.getElementsByClassName("daily-rain-chance");
+const dailyRainArr = Array.from(dailyRain);
 
 // fetch weather data from weather API
 const getData = async (place) => {
@@ -39,7 +61,7 @@ const getData = async (place) => {
   }
 };
 
-// gets temp unit data for F or C depending on the country input
+// get temp unit data for F or C depending on the country input
 const setTemp = async (data, tempType) => {
   if (currentPageInfo.tempUnit === "f") {
     // if tempUnit is Fahrenheit
@@ -162,11 +184,104 @@ const loadCurrentData = async (weatherObj) => {
 
   // wind direction
   windDirection.textContent = " " + (await weatherObj.current.wind_dir);
+
+  // chance of rian
+  currentRain.textContent = await weatherObj.forecast.forecastday[0].day
+    .daily_chance_of_rain;
+
+  // UV index
+  currentUV.textContent = await weatherObj.current.uv;
 };
 
 const loadHourlyData = async (weatherObj) => {
-  // function to create hourly elements
-  // create loop to loop through hourly elements and update each element
+  // DOM elements for each hour
+  //   const hourlyTime = document.getElementsByClassName("hourly-time");
+  //   const hourlyTimeArr = Array.from(hourlyTime);
+  //   const hourlyTemp = document.getElementsByClassName("hourly-temp");
+  //   const hourlyTempArr = Array.from(hourlyTemp);
+  //   const hourlyRain = document.getElementsByClassName("hourly-rain-chance");
+  //   const hourlyRainArr = Array.from(hourlyRain);
+  //   const hourlyIcon = document.getElementsByClassName("hourly-icon");
+  //   const hourlyIconArr = Array.from(hourlyIcon);
+
+  // get current hour in order to get the hour and temp data for the
+  // current time instead of from '00:00'
+  const getCurrentHour = new Date(await weatherObj.location.localtime);
+  const currentHour = format(getCurrentHour, "H");
+
+  // loop to populate each hour's elements
+  for (let i = 0; i < 24; i += 1) {
+    // calculate current hour from current index
+    let calculatedHour = parseInt(currentHour) + i;
+    let day = 0;
+
+    // if the current hour is greater than 24,
+    // recalculate the current hour into the next day
+    if (calculatedHour > 23) {
+      calculatedHour = calculatedHour - 24;
+      // update the day variable into the next day
+      day = 1;
+    }
+
+    // get and format the time for each hour
+    let getHour = new Date(
+      await weatherObj.forecast.forecastday[day].hour[calculatedHour].time,
+    );
+    const formattedHour = format(getHour, "h:mmaaa");
+
+    // set the time for each hour
+    hourlyTimeArr[i].textContent = formattedHour;
+
+    // get temperature for that hour
+    let temp = await setTemp(
+      weatherObj.forecast.forecastday[day].hour[calculatedHour],
+      "temp",
+    );
+
+    // set the temp for each hour
+    hourlyTempArr[i].textContent = await temp;
+
+    // get the weather icon for each hour
+    let getWeatherIcon = await weatherObj.forecast.forecastday[day].hour[
+      calculatedHour
+    ].condition.icon;
+    // format the icon string
+    let formattedIcon = await getWeatherIcon.replace(
+      "//cdn.weatherapi.com/",
+      "",
+    );
+    // set the weather icon for each hour
+    hourlyIconArr[i].setAttribute("src", await formattedIcon);
+
+    // chance of rain or snow
+    if (currentPageInfo.tempUnit === "f" && temp < 33) {
+      // set the chance of snow if below freezing
+      hourlyRainArr[i].textContent =
+        (await weatherObj.forecast.forecastday[day].hour[calculatedHour]
+          .chance_of_snow) + "%";
+    } else if (currentPageInfo.tempUnit === "c" && temp < 1) {
+      (await weatherObj.forecast.forecastday[day].hour[calculatedHour]
+        .chance_of_snow) + "%";
+    } else {
+      // set the chance of rain if above freezing
+      hourlyRainArr[i].textContent =
+        (await weatherObj.forecast.forecastday[day].hour[calculatedHour]
+          .chance_of_rain) + "%";
+    }
+  }
+};
+
+const loadDailyData = async (weatherObj) => {
+  //   dayOfWeekArr
+  //   dailyTempHighArr
+  //   dailyTempLowArr
+  //   dailyIconArr
+  //   dailyRainArr
+  // get day of week and set it to dayOfWeekArr[i]
+  // get day's high and set it to dailyTempHighArr[i]
+  // get day's low and set it to dailyTempLowArr[i]
+  // get day's icon and set it to dailyIconArr[i]
+  // get day's chance of rain OR snow and set it to dailyRainArr[i]
 };
 
 const loadPageData = async (place) => {
@@ -177,6 +292,7 @@ const loadPageData = async (place) => {
   await loadCurrentData(weatherData);
 
   // load data for "hourly" container
+  await loadHourlyData(weatherData);
 
   // load data for "daily" container
 };

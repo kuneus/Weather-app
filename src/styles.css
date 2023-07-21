@@ -130,11 +130,19 @@ header {
 /* <---- MAIN ----> */
 /* **************** */
 
-#current-container {
-  border: 1px solid #000;
+#main {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
+}
+
+/* <---- CURRENT INFO ----> */
+#current-container {
+  border: 1px solid #000;
+  width: 50%;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
 }
 
 #current-header {
@@ -142,6 +150,7 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 5px;
 }
 
@@ -150,27 +159,58 @@ header {
   font-size: 1.5rem;
 }
 
+#current-main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
 #current-display {
   border: 1px solid blue;
   display: grid;
   grid-template: auto auto auto / 120px;
   align-content: center;
+  justify-content: end;
+  padding-right: 20px;
   gap: 5px;
 }
 
+#today-display {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-left: 20px;
+  padding-top: 10px;
+}
+
 #temp-now {
-  font-size: 5rem;
+  font-size: 4.5rem;
   display: flex;
   justify-content: center;
 }
 
 #current-highlow {
   display: flex;
-  width: 100%;
+
   justify-content: space-between;
   border: 1px solid #000;
 }
 
+/* <---- HOURLY INFO ----> */
+#hourly-container {
+  display: flex;
+  width: 80%;
+  overflow-x: scroll;
+  gap: 25px;
+  height: 150px;
+  padding: 10px;
+}
+
+.single-hour-cont {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 /* ****************** */
 /* <---- FOOTER ----> */
 /* ****************** */
