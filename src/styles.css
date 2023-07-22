@@ -211,6 +211,13 @@ header {
   justify-content: center;
   align-items: center;
 }
+
+/* <---- DAILY INFO ----> */
+#daily-container {
+  display: flex;
+  gap: 20px;
+}
+
 /* ****************** */
 /* <---- FOOTER ----> */
 /* ****************** */

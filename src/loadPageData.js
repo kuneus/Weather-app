@@ -44,6 +44,8 @@ const dailyIcon = document.getElementsByClassName("daily-icon");
 const dailyIconArr = Array.from(dailyIcon);
 const dailyRain = document.getElementsByClassName("daily-rain-chance");
 const dailyRainArr = Array.from(dailyRain);
+const dailySnow = document.getElementsByClassName("daily-snow-chance");
+const dailySnowArr = Array.from(dailySnow);
 
 // fetch weather data from weather API
 const getData = async (place) => {
@@ -193,17 +195,8 @@ const loadCurrentData = async (weatherObj) => {
   currentUV.textContent = await weatherObj.current.uv;
 };
 
+// loads data for the next 24 hours
 const loadHourlyData = async (weatherObj) => {
-  // DOM elements for each hour
-  //   const hourlyTime = document.getElementsByClassName("hourly-time");
-  //   const hourlyTimeArr = Array.from(hourlyTime);
-  //   const hourlyTemp = document.getElementsByClassName("hourly-temp");
-  //   const hourlyTempArr = Array.from(hourlyTemp);
-  //   const hourlyRain = document.getElementsByClassName("hourly-rain-chance");
-  //   const hourlyRainArr = Array.from(hourlyRain);
-  //   const hourlyIcon = document.getElementsByClassName("hourly-icon");
-  //   const hourlyIconArr = Array.from(hourlyIcon);
-
   // get current hour in order to get the hour and temp data for the
   // current time instead of from '00:00'
   const getCurrentHour = new Date(await weatherObj.location.localtime);
@@ -260,8 +253,9 @@ const loadHourlyData = async (weatherObj) => {
         (await weatherObj.forecast.forecastday[day].hour[calculatedHour]
           .chance_of_snow) + "%";
     } else if (currentPageInfo.tempUnit === "c" && temp < 1) {
-      (await weatherObj.forecast.forecastday[day].hour[calculatedHour]
-        .chance_of_snow) + "%";
+      hourlyRainArr[i].textContent =
+        (await weatherObj.forecast.forecastday[day].hour[calculatedHour]
+          .chance_of_snow) + "%";
     } else {
       // set the chance of rain if above freezing
       hourlyRainArr[i].textContent =
@@ -271,16 +265,77 @@ const loadHourlyData = async (weatherObj) => {
   }
 };
 
+// loads data for the next 3 days
 const loadDailyData = async (weatherObj) => {
-  //   dayOfWeekArr
-  //   dailyTempHighArr
-  //   dailyTempLowArr
-  //   dailyIconArr
-  //   dailyRainArr
-  // get day of week and set it to dayOfWeekArr[i]
-  // get day's high and set it to dailyTempHighArr[i]
-  // get day's low and set it to dailyTempLowArr[i]
-  // get day's icon and set it to dailyIconArr[i]
+  for (let i = 0; i < 3; i += 1) {
+    // var for starting the index from tomorrow instead of today
+    const dayAhead = parseInt(1 + i);
+
+    // get the date for tomorrow
+    const getDate = await weatherObj.forecast.forecastday[dayAhead].date;
+    // adjust for the timezone
+    const adjustTZ = (await getDate) + "T00:00:00";
+    // format to new date
+    const newDate = new Date(await adjustTZ);
+    // format to the day of the week
+    const formattedDate = format(await newDate, "ccc");
+    dayOfWeekArr[i].textContent = formattedDate;
+
+    // get day's high and set it to dailyTempHighArr[i]
+    dailyTempHighArr[i].textContent = await setTemp(
+      weatherObj.forecast.forecastday[dayAhead].day,
+      "maxtemp",
+    );
+
+    // get day's low and set it to dailyTempLowArr[i]
+    dailyTempLowArr[i].textContent = await setTemp(
+      weatherObj.forecast.forecastday[dayAhead].day,
+      "mintemp",
+    );
+
+    // get day's icon and set it to dailyIconArr[i]
+    // format icon request by removing URL
+    let getWeatherIcon = await weatherObj.forecast.forecastday[dayAhead].day
+      .condition.icon;
+
+    let formattedIcon = await getWeatherIcon.replace(
+      "//cdn.weatherapi.com/",
+      "",
+    );
+    dailyIconArr[i].setAttribute("src", await formattedIcon);
+
+    // set the chance of rain
+    dailyRainArr[i].textContent =
+      "💧" +
+      (await weatherObj.forecast.forecastday[dayAhead].day
+        .daily_chance_of_rain) +
+      "%";
+
+    // get temperature for that day
+    let temp = await setTemp(
+      weatherObj.forecast.forecastday[dayAhead].day,
+      "mintemp",
+    );
+
+    // Add chance of snow if below freezing that day
+    if (currentPageInfo.tempUnit === "f" && temp < 33) {
+      dailySnowArr[i].textContent =
+        "❄️" +
+        (await weatherObj.forecast.forecastday[dayAhead].day
+          .daily_chance_of_snow) +
+        "%";
+    } else if (currentPageInfo.tempUnit === "c" && temp < 1) {
+      dailySnowArr[i].textContent =
+        "❄️" +
+        (await weatherObj.forecast.forecastday[dayAhead].day
+          .daily_chance_of_snow) +
+        "%";
+    } else {
+      // clear content if not below freezing that day
+      dailySnowArr[i].textContent = "";
+    }
+  }
+
   // get day's chance of rain OR snow and set it to dailyRainArr[i]
 };
 
@@ -295,5 +350,6 @@ const loadPageData = async (place) => {
   await loadHourlyData(weatherData);
 
   // load data for "daily" container
+  await loadDailyData(weatherData);
 };
 export { loadPageData };
