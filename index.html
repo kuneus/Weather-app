@@ -3,6 +3,15 @@
   <head>
     <title>Weatherest</title>
     <meta charset="utf-8" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Bungee+Shade&display=swap");
+      @import url("https://fonts.cdnfonts.com/css/begild");
+      @import url("https://fonts.cdnfonts.com/css/red-hook");
+      @import url("https://fonts.cdnfonts.com/css/sans-serif-shaded");
+      @import url("https://fonts.cdnfonts.com/css/calibri-light");
+      @import url("https://fonts.cdnfonts.com/css/major-mono-display-2");
+      @import url("https://fonts.cdnfonts.com/css/istanbul-pro");
+    </style>
   </head>
   <body>
     <div id="app"></div>
@@ -22,218 +31,219 @@
     </header>
     <!-- **** MAIN **** -->
     <div id="main">
+      <!-- **** CURRENT **** -->
       <div id="current-container">
         <div id="current-header">
-          <div id="current-location">current-location</div>
-          <div id="current-country">current-country</div>
-          <div id="current-date">current-date</div>
-          <div id="current-time">current-time</div>
+          <div id="current-location"></div>
+          <div id="current-country"></div>
+          <div id="current-date"></div>
+          <div id="current-time"></div>
         </div>
         <div id="current-main">
           <div id="current-display">
-            <div id="temp-now" class="temp-unit">temp-now</div>
+            <div id="temp-now" class="temp-unit"></div>
             <div id="current-highlow">
-              <div>
-                H: <span id="current-high" class="temp-unit">current-high</span>
-              </div>
-              <div>
-                L: <span id="current-low" class="temp-unit">current-low</span>
-              </div>
+              <div>H: <span id="current-high" class="temp-unit"></span></div>
+              <div>L: <span id="current-low" class="temp-unit"></span></div>
             </div>
-            <div id="current-info">current-info</div>
+            <div id="current-info"></div>
             <div id="feels-like-cont">
               Feels like <span id="feels-like" class="temp-unit"></span>
             </div>
           </div>
-          <div id="today-of-week-display">
+          <div id="today-display">
             <div>Humidity: <span id="current-humidity"></span>%</div>
             <div>
-              Wind: <span id="current-wind">current-wind</span>
-              <span id="wind-unit">wind-unit</span>
-              <span id="wind-direction">wind-direction</span>
+              Wind: <span id="current-wind"></span>
+              <span id="wind-unit"></span>
+              <span id="wind-direction"></span>
             </div>
             <div>Chance of rain: <span id="current-rain"></span>%</div>
             <div>UV Index: <span id="current-uv"></span></div>
           </div>
         </div>
       </div>
-      <div id="hourly-container">
-        <div class="single-hour-cont">
-          <div class="hourly-time"></div>
-          <div class="hourly-temp temp-unit"></div>
-          <img src="" alt="" class="hourly-icon" />
-          <div class="hourly-rain-chance"></div>
+      <!-- **** HOURLY **** -->
+      <div id="extra-hourly-cont">
+        <div id="hourly-container">
+          <div class="single-hour-cont">
+            <div class="hourly-time"></div>
+            <div class="hourly-temp temp-unit"></div>
+            <img src="" alt="" class="hourly-icon" />
+            <div class="hourly-rain-chance"></div>
+          </div>
+          <div class="single-hour-cont">
+            <div class="hourly-time"></div>
+            <div class="hourly-temp temp-unit"></div>
+            <img src="" alt="" class="hourly-icon" />
+            <div class="hourly-rain-chance"></div>
+          </div>
+          <div class="single-hour-cont">
+            <div class="hourly-time"></div>
+            <div class="hourly-temp temp-unit"></div>
+            <img src="" alt="" class="hourly-icon" />
+            <div class="hourly-rain-chance"></div>
+          </div>
+          <div class="single-hour-cont">
+            <div class="hourly-time"></div>
+            <div class="hourly-temp temp-unit"></div>
+            <img src="" alt="" class="hourly-icon" />
+            <div class="hourly-rain-chance"></div>
+          </div>
+          <div class="single-hour-cont">
+            <div class="hourly-time"></div>
+            <div class="hourly-temp temp-unit"></div>
+            <img src="" alt="" class="hourly-icon" />
+            <div class="hourly-rain-chance"></div>
+          </div>
+          <div class="single-hour-cont">
+            <div class="hourly-time"></div>
+            <div class="hourly-temp temp-unit"></div>
+            <img src="" alt="" class="hourly-icon" />
+            <div class="hourly-rain-chance"></div>
+          </div>
+          <div class="single-hour-cont">
+            <div class="hourly-time"></div>
+            <div class="hourly-temp temp-unit"></div>
+            <img src="" alt="" class="hourly-icon" />
+            <div class="hourly-rain-chance"></div>
+          </div>
+          <div class="single-hour-cont">
+            <div class="hourly-time"></div>
+            <div class="hourly-temp temp-unit"></div>
+            <img src="" alt="" class="hourly-icon" />
+            <div class="hourly-rain-chance"></div>
+          </div>
+          <div class="single-hour-cont">
+            <div class="hourly-time"></div>
+            <div class="hourly-temp temp-unit"></div>
+            <img src="" alt="" class="hourly-icon" />
+            <div class="hourly-rain-chance"></div>
+          </div>
+          <div class="single-hour-cont">
+            <div class="hourly-time"></div>
+            <div class="hourly-temp temp-unit"></div>
+            <img src="" alt="" class="hourly-icon" />
+            <div class="hourly-rain-chance"></div>
+          </div>
+          <div class="single-hour-cont">
+            <div class="hourly-time"></div>
+            <div class="hourly-temp temp-unit"></div>
+            <img src="" alt="" class="hourly-icon" />
+            <div class="hourly-rain-chance"></div>
+          </div>
+          <div class="single-hour-cont">
+            <div class="hourly-time"></div>
+            <div class="hourly-temp temp-unit"></div>
+            <img src="" alt="" class="hourly-icon" />
+            <div class="hourly-rain-chance"></div>
+          </div>
+          <div class="single-hour-cont">
+            <div class="hourly-time"></div>
+            <div class="hourly-temp temp-unit"></div>
+            <img src="" alt="" class="hourly-icon" />
+            <div class="hourly-rain-chance"></div>
+          </div>
+          <div class="single-hour-cont">
+            <div class="hourly-time"></div>
+            <div class="hourly-temp temp-unit"></div>
+            <img src="" alt="" class="hourly-icon" />
+            <div class="hourly-rain-chance"></div>
+          </div>
+          <div class="single-hour-cont">
+            <div class="hourly-time"></div>
+            <div class="hourly-temp temp-unit"></div>
+            <img src="" alt="" class="hourly-icon" />
+            <div class="hourly-rain-chance"></div>
+          </div>
+          <div class="single-hour-cont">
+            <div class="hourly-time"></div>
+            <div class="hourly-temp temp-unit"></div>
+            <img src="" alt="" class="hourly-icon" />
+            <div class="hourly-rain-chance"></div>
+          </div>
+          <div class="single-hour-cont">
+            <div class="hourly-time"></div>
+            <div class="hourly-temp temp-unit"></div>
+            <img src="" alt="" class="hourly-icon" />
+            <div class="hourly-rain-chance"></div>
+          </div>
+          <div class="single-hour-cont">
+            <div class="hourly-time"></div>
+            <div class="hourly-temp temp-unit"></div>
+            <img src="" alt="" class="hourly-icon" />
+            <div class="hourly-rain-chance"></div>
+          </div>
+          <div class="single-hour-cont">
+            <div class="hourly-time"></div>
+            <div class="hourly-temp temp-unit"></div>
+            <img src="" alt="" class="hourly-icon" />
+            <div class="hourly-rain-chance"></div>
+          </div>
+          <div class="single-hour-cont">
+            <div class="hourly-time"></div>
+            <div class="hourly-temp temp-unit"></div>
+            <img src="" alt="" class="hourly-icon" />
+            <div class="hourly-rain-chance"></div>
+          </div>
+          <div class="single-hour-cont">
+            <div class="hourly-time"></div>
+            <div class="hourly-temp temp-unit"></div>
+            <img src="" alt="" class="hourly-icon" />
+            <div class="hourly-rain-chance"></div>
+          </div>
+          <div class="single-hour-cont">
+            <div class="hourly-time"></div>
+            <div class="hourly-temp temp-unit"></div>
+            <img src="" alt="" class="hourly-icon" />
+            <div class="hourly-rain-chance"></div>
+          </div>
+          <div class="single-hour-cont">
+            <div class="hourly-time"></div>
+            <div class="hourly-temp temp-unit"></div>
+            <img src="" alt="" class="hourly-icon" />
+            <div class="hourly-rain-chance"></div>
+          </div>
+          <div class="single-hour-cont">
+            <div class="hourly-time"></div>
+            <div class="hourly-temp temp-unit"></div>
+            <img src="" alt="" class="hourly-icon" />
+            <div class="hourly-rain-chance"></div>
+          </div>
         </div>
-        <div class="single-hour-cont">
-          <div class="hourly-time"></div>
-          <div class="hourly-temp temp-unit"></div>
-          <img src="" alt="" class="hourly-icon" />
-          <div class="hourly-rain-chance"></div>
-        </div>
-        <div class="single-hour-cont">
-          <div class="hourly-time"></div>
-          <div class="hourly-temp temp-unit"></div>
-          <img src="" alt="" class="hourly-icon" />
-          <div class="hourly-rain-chance"></div>
-        </div>
-        <div class="single-hour-cont">
-          <div class="hourly-time"></div>
-          <div class="hourly-temp temp-unit"></div>
-          <img src="" alt="" class="hourly-icon" />
-          <div class="hourly-rain-chance"></div>
-        </div>
-        <div class="single-hour-cont">
-          <div class="hourly-time"></div>
-          <div class="hourly-temp temp-unit"></div>
-          <img src="" alt="" class="hourly-icon" />
-          <div class="hourly-rain-chance"></div>
-        </div>
-        <div class="single-hour-cont">
-          <div class="hourly-time"></div>
-          <div class="hourly-temp temp-unit"></div>
-          <img src="" alt="" class="hourly-icon" />
-          <div class="hourly-rain-chance"></div>
-        </div>
-        <div class="single-hour-cont">
-          <div class="hourly-time"></div>
-          <div class="hourly-temp temp-unit"></div>
-          <img src="" alt="" class="hourly-icon" />
-          <div class="hourly-rain-chance"></div>
-        </div>
-        <div class="single-hour-cont">
-          <div class="hourly-time"></div>
-          <div class="hourly-temp temp-unit"></div>
-          <img src="" alt="" class="hourly-icon" />
-          <div class="hourly-rain-chance"></div>
-        </div>
-        <div class="single-hour-cont">
-          <div class="hourly-time"></div>
-          <div class="hourly-temp temp-unit"></div>
-          <img src="" alt="" class="hourly-icon" />
-          <div class="hourly-rain-chance"></div>
-        </div>
-        <div class="single-hour-cont">
-          <div class="hourly-time"></div>
-          <div class="hourly-temp temp-unit"></div>
-          <img src="" alt="" class="hourly-icon" />
-          <div class="hourly-rain-chance"></div>
-        </div>
-        <div class="single-hour-cont">
-          <div class="hourly-time"></div>
-          <div class="hourly-temp temp-unit"></div>
-          <img src="" alt="" class="hourly-icon" />
-          <div class="hourly-rain-chance"></div>
-        </div>
-        <div class="single-hour-cont">
-          <div class="hourly-time"></div>
-          <div class="hourly-temp temp-unit"></div>
-          <img src="" alt="" class="hourly-icon" />
-          <div class="hourly-rain-chance"></div>
-        </div>
-        <div class="single-hour-cont">
-          <div class="hourly-time"></div>
-          <div class="hourly-temp temp-unit"></div>
-          <img src="" alt="" class="hourly-icon" />
-          <div class="hourly-rain-chance"></div>
-        </div>
-        <div class="single-hour-cont">
-          <div class="hourly-time"></div>
-          <div class="hourly-temp temp-unit"></div>
-          <img src="" alt="" class="hourly-icon" />
-          <div class="hourly-rain-chance"></div>
-        </div>
-        <div class="single-hour-cont">
-          <div class="hourly-time"></div>
-          <div class="hourly-temp temp-unit"></div>
-          <img src="" alt="" class="hourly-icon" />
-          <div class="hourly-rain-chance"></div>
-        </div>
-        <div class="single-hour-cont">
-          <div class="hourly-time"></div>
-          <div class="hourly-temp temp-unit"></div>
-          <img src="" alt="" class="hourly-icon" />
-          <div class="hourly-rain-chance"></div>
-        </div>
-        <div class="single-hour-cont">
-          <div class="hourly-time"></div>
-          <div class="hourly-temp temp-unit"></div>
-          <img src="" alt="" class="hourly-icon" />
-          <div class="hourly-rain-chance"></div>
-        </div>
-        <div class="single-hour-cont">
-          <div class="hourly-time"></div>
-          <div class="hourly-temp temp-unit"></div>
-          <img src="" alt="" class="hourly-icon" />
-          <div class="hourly-rain-chance"></div>
-        </div>
-        <div class="single-hour-cont">
-          <div class="hourly-time"></div>
-          <div class="hourly-temp temp-unit"></div>
-          <img src="" alt="" class="hourly-icon" />
-          <div class="hourly-rain-chance"></div>
-        </div>
-        <div class="single-hour-cont">
-          <div class="hourly-time"></div>
-          <div class="hourly-temp temp-unit"></div>
-          <img src="" alt="" class="hourly-icon" />
-          <div class="hourly-rain-chance"></div>
-        </div>
-        <div class="single-hour-cont">
-          <div class="hourly-time"></div>
-          <div class="hourly-temp temp-unit"></div>
-          <img src="" alt="" class="hourly-icon" />
-          <div class="hourly-rain-chance"></div>
-        </div>
-        <div class="single-hour-cont">
-          <div class="hourly-time"></div>
-          <div class="hourly-temp temp-unit"></div>
-          <img src="" alt="" class="hourly-icon" />
-          <div class="hourly-rain-chance"></div>
-        </div>
-        <div class="single-hour-cont">
-          <div class="hourly-time"></div>
-          <div class="hourly-temp temp-unit"></div>
-          <img src="" alt="" class="hourly-icon" />
-          <div class="hourly-rain-chance"></div>
-        </div>
-        <div class="single-hour-cont">
-          <div class="hourly-time"></div>
-          <div class="hourly-temp temp-unit"></div>
-          <img src="" alt="" class="hourly-icon" />
-          <div class="hourly-rain-chance"></div>
-        </div>
-        <!-- dynamically add DOM elements? -->
+        <div id="empty"></div>
       </div>
+      <!-- **** DAILY **** -->
       <div id="daily-container">
         <div>
           <div class="day-of-week"></div>
-          <div class="daily-temp-high temp-unit"></div>
-          <div class="daily-temp-low temp-unit"></div>
+          <div class="daily-high-low">
+            <div class="daily-temp-high temp-unit"></div>
+            <div class="daily-temp-low temp-unit"></div>
+          </div>
           <img class="daily-icon" src="" />
           <div class="daily-rain-chance"></div>
           <div class="daily-snow-chance"></div>
         </div>
         <div>
           <div class="day-of-week"></div>
-          <div class="daily-temp-high temp-unit"></div>
-          <div class="daily-temp-low temp-unit"></div>
+          <div class="daily-high-low">
+            <div class="daily-temp-high temp-unit"></div>
+            <div class="daily-temp-low temp-unit"></div>
+          </div>
           <img class="daily-icon" src="" />
           <div class="daily-rain-chance"></div>
           <div class="daily-snow-chance"></div>
         </div>
-        <div>
-          <div class="day-of-week"></div>
-          <div class="daily-temp-high temp-unit"></div>
-          <div class="daily-temp-low temp-unit"></div>
-          <img class="daily-icon" src="" />
-          <div class="daily-rain-chance"></div>
-          <div class="daily-snow-chance"></div>
-        </div>
-        <!-- dynamically add DOM elements? -->
       </div>
     </div>
     <!-- **** FOOTER **** -->
-    <footer></footer>
+    <footer>
+      Powered by
+      <a href="https://www.weatherapi.com/" title="Free Weather API">
+        WeatherAPI.com
+      </a>
+    </footer>
     <script src="bundle.js"></script>
   </body>
 </html>
