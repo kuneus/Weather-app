@@ -92,6 +92,73 @@ video {
   vertical-align: baseline;
 }
 
+:root {
+  --main-bg-color: rgba(202, 202, 202, 0.428);
+  --searchbar-color: gray;
+  --search-btn-color: rgb(107, 107, 107);
+  --font-color: black;
+}
+
+:root.cloudy {
+  --main-bg-color: rgba(202, 202, 202, 0.428);
+  --searchbar-color: gray;
+  --search-btn-color: rgb(107, 107, 107);
+  --font-color: black;
+  --bg-image: url("images/cloudy.png");
+}
+
+:root.snowing {
+  --main-bg-color: rgba(202, 202, 202, 0.428);
+  --searchbar-color: gray;
+  --search-btn-color: rgb(107, 107, 107);
+  --font-color: black;
+  --bg-image: url("images/snowing.png");
+}
+
+:root.sunny {
+  --main-bg-color: rgba(202, 202, 202, 0.428);
+  --searchbar-color: gray;
+  --search-btn-color: rgb(107, 107, 107);
+  --font-color: black;
+  --bg-image: url("images/sunny.png");
+}
+
+:root.clear-sky {
+  --main-bg-color: rgba(17, 0, 6, 0.564);
+  --searchbar-color: gray;
+  --search-btn-color: rgb(107, 107, 107);
+  --font-color: rgb(255, 255, 255);
+  --bg-image: url("images/clear_sky.png");
+}
+
+:root.misty {
+  --main-bg-color: rgba(202, 202, 202, 0.428);
+  --searchbar-color: gray;
+  --search-btn-color: rgb(107, 107, 107);
+  --font-color: black;
+  --bg-image: url("images/misty.png");
+}
+:root.raining {
+  --main-bg-color: rgba(202, 202, 202, 0.428);
+  --searchbar-color: gray;
+  --search-btn-color: rgb(107, 107, 107);
+  --font-color: black;
+  --bg-image: url("images/raining.png");
+}
+
+body {
+  background-image: var(--bg-image);
+  background-size: cover;
+  font-family: "Calibri Light", sans-serif;
+  color: var(--font-color);
+}
+
+.temp-unit {
+  font-family: "Major Mono Display", sans-serif;
+  font-family: "Instanbul Pro", sans-serif;
+  font-weight: 700;
+}
+
 /* ****************** */
 /* <---- HEADER ----> */
 /* ****************** */
@@ -118,6 +185,7 @@ header {
   border-style: none;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
+  background-color: var(--search-btn-color);
 }
 
 #toggle-temp {
@@ -135,18 +203,20 @@ header {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 20px;
 }
 
 /* <---- CURRENT INFO ----> */
 #current-container {
-  border: 1px solid #000;
   width: 50%;
   display: grid;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: auto auto;
+  border-radius: 15px;
+  padding: 20px;
+  background-color: var(--main-bg-color);
 }
 
 #current-header {
-  border: 1px solid red;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -165,11 +235,10 @@ header {
 }
 
 #current-display {
-  border: 1px solid blue;
   display: grid;
-  grid-template: auto auto auto / 120px;
+  grid-template: auto auto auto auto / 120px;
   align-content: center;
-  justify-content: end;
+  justify-content: center;
   padding-right: 20px;
   gap: 5px;
 }
@@ -178,31 +247,47 @@ header {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
   padding-left: 20px;
   padding-top: 10px;
 }
 
 #temp-now {
-  font-size: 4.5rem;
+  font-size: 6rem;
   display: flex;
   justify-content: center;
+  font-family: "Red Hook", sans-serif;
+  font-weight: 500;
 }
 
 #current-highlow {
   display: flex;
-
   justify-content: space-between;
-  border: 1px solid #000;
 }
 
 /* <---- HOURLY INFO ----> */
+#extra-hourly-cont {
+  display: flex;
+  width: 50%;
+  border-radius: 15px;
+
+  padding: 20px;
+  background-color: var(--main-bg-color);
+}
+
+#empty {
+  width: 0px;
+  height: 150px;
+  content: "";
+}
+
 #hourly-container {
   display: flex;
-  width: 80%;
+  width: 100%;
   overflow-x: scroll;
   gap: 25px;
-  height: 150px;
-  padding: 10px;
+  height: 200px;
+  padding-bottom: 20px;
 }
 
 .single-hour-cont {
@@ -210,12 +295,44 @@ header {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 10px;
 }
 
 /* <---- DAILY INFO ----> */
 #daily-container {
   display: flex;
-  gap: 20px;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 50%;
+
+  border-radius: 15px;
+  padding: 20px;
+  background-color: var(--main-bg-color);
+}
+
+#daily-container > div {
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* justify-content: space-between; */
+  align-items: center;
+  gap: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.daily-high-low {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.daily-temp-high {
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.daily-temp-low {
+  font-weight: 300;
 }
 
 /* ****************** */

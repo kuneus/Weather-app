@@ -1,4 +1,5 @@
 import { currentPageInfo } from "./index";
+import format from "date-fns/format";
 
 const tempUnitsToChange = document.getElementsByClassName("temp-unit");
 const arrOfTemps = Array.from(tempUnitsToChange);
@@ -6,23 +7,6 @@ const celsiusSpan = document.getElementById("celsius-span");
 const fahrenheitSpan = document.getElementById("fahrenheit-span");
 const currentWind = document.getElementById("current-wind");
 const windUnit = document.getElementById("wind-unit");
-
-// function for creating and appending new elements
-const createAndAppend = (el, elId, elClass, elParent) => {
-  let element = document.createElement(el);
-
-  if (elId) {
-    element.setAttribute("id", elId);
-  }
-
-  if (elClass) {
-    element.setAttribute("class", elClass);
-  }
-
-  elParent.appendChild(element);
-
-  return element;
-};
 
 // changes temperature unit to Fahrenheit or Celsius
 const changeTempUnit = () => {
@@ -104,11 +88,111 @@ const changeTempBtn = () => {
   }
 };
 
+// change the class of the root document
+const changeRootClass = (theme) => {
+  const root = document.documentElement;
+
+  switch (theme) {
+    case "sunny":
+      root.className = theme;
+      break;
+    case "cloudy":
+      root.className = theme;
+      break;
+    case "raining":
+      root.className = theme;
+      break;
+    case "snowing":
+      root.className = theme;
+      break;
+    case "misty":
+      root.className = theme;
+      break;
+    case "clear-sky":
+      root.className = theme;
+      break;
+    default:
+      console.log("wrong argument provided");
+  }
+};
+
+const setTheme = async (weatherObj) => {
+  // get current time and format it for the hour
+  const currentTime = new Date(await weatherObj.location.localtime);
+  const currentHour = format(currentTime, "H");
+
+  // get the sunset and sunrise time and format it for the hour
+  const sunset = await weatherObj.forecast.forecastday[0].astro.sunset;
+  const formatSunset = sunset.slice(0, 2);
+  const sunrise = await weatherObj.forecast.forecastday[0].astro.sunrise;
+  const formatSunrise = sunrise.slice(0, 2);
+
+  const sunsetHour = parseInt(formatSunset) + 12;
+  const sunriseHour = parseInt(formatSunrise);
+
+  // code for the current weather condition
+  const conditionCode = await weatherObj.current.condition.code;
+
+  // all codes for the weather conditions
+  const allCodes = [
+    {
+      code: [1003, 1006, 1009],
+      condition: "cloudy",
+    },
+    {
+      code: [1066, 1114, 1117, 1210, 1213, 1216, 1219, 1222, 1225, 1279, 1282],
+      condition: "snowing",
+    },
+    {
+      code: [
+        1063, 1069, 1072, 1087, 1150, 1153, 1168, 1171, 1180, 1183, 1186, 1189,
+        1192, 1195, 1198, 1201, 1204, 1207, 1237, 1240, 1243, 1246, 1249, 1252,
+        1261, 1264, 1273, 1276,
+      ],
+      condition: "raining",
+    },
+  ];
+
+  // loop through all the weather codes and then change the root class
+  // once match is found
+  for (let i = 0; i < 3; i += 1) {
+    let stopLoop = false;
+
+    for (let n = 0; n < allCodes[i].code.length; n += 1) {
+      if (conditionCode === 1000) {
+        // change theme to sunny if during the day
+        if (currentHour < sunsetHour && currentHour > sunriseHour) {
+          changeRootClass("sunny");
+          stopLoop = true;
+          break;
+        } else {
+          // change theme to clear night sky if during the night
+          changeRootClass("clear-sky");
+          stopLoop = true;
+          break;
+        }
+      } else if (conditionCode === allCodes[i].code[n]) {
+        changeRootClass(allCodes[i].condition);
+        stopLoop = true;
+        break;
+      }
+    }
+
+    if (stopLoop === true) {
+      break;
+    }
+  }
+};
+
+const loadTheme = async (weatherObj) => {
+  await setTheme(weatherObj);
+};
+
 // setBackground function to change BG based on time and weather
 export {
-  createAndAppend,
   changeTempUnit,
   changeTempBtn,
   changeWindUnit,
   changeWindValue,
+  loadTheme,
 };

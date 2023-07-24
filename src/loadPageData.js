@@ -6,7 +6,7 @@ Load functions load the retrieved data to the DOM
 */
 import format from "date-fns/format";
 import { currentPageInfo } from "./index.js";
-import { changeTempBtn } from "./pageFunctions.js";
+import { changeTempBtn, loadTheme } from "./pageFunctions.js";
 
 // DOM elements for current data
 const currentLocation = document.getElementById("current-location");
@@ -64,7 +64,7 @@ const getData = async (place) => {
 };
 
 // get temp unit data for F or C depending on the country input
-const setTemp = async (data, tempType) => {
+const getTemp = async (data, tempType) => {
   if (currentPageInfo.tempUnit === "f") {
     // if tempUnit is Fahrenheit
     switch (tempType) {
@@ -96,6 +96,7 @@ const setTemp = async (data, tempType) => {
   }
 };
 
+// get wind speed and unit based on temperature unit
 const getWindspeed = async (data) => {
   if (currentPageInfo.tempUnit === "f") {
     // if tempUnit is Fahrenheit, then use miles
@@ -155,16 +156,16 @@ const loadCurrentData = async (weatherObj) => {
   }
 
   // current temperature
-  tempNow.textContent = await setTemp(weatherObj.current, "temp");
+  tempNow.textContent = await getTemp(weatherObj.current, "temp");
 
   // today's high
-  currentHigh.textContent = await setTemp(
+  currentHigh.textContent = await getTemp(
     weatherObj.forecast.forecastday[0].day,
     "maxtemp",
   );
 
   // today's low
-  currentLow.textContent = await setTemp(
+  currentLow.textContent = await getTemp(
     weatherObj.forecast.forecastday[0].day,
     "mintemp",
   );
@@ -173,7 +174,7 @@ const loadCurrentData = async (weatherObj) => {
   currentInfo.textContent = await weatherObj.current.condition.text;
 
   // feels like
-  feelsLike.textContent = await setTemp(weatherObj.current, "feelslike");
+  feelsLike.textContent = await getTemp(weatherObj.current, "feelslike");
 
   // humidity
   currentHumidity.textContent = await weatherObj.current.humidity;
@@ -187,7 +188,7 @@ const loadCurrentData = async (weatherObj) => {
   // wind direction
   windDirection.textContent = " " + (await weatherObj.current.wind_dir);
 
-  // chance of rian
+  // chance of rain
   currentRain.textContent = await weatherObj.forecast.forecastday[0].day
     .daily_chance_of_rain;
 
@@ -226,7 +227,7 @@ const loadHourlyData = async (weatherObj) => {
     hourlyTimeArr[i].textContent = formattedHour;
 
     // get temperature for that hour
-    let temp = await setTemp(
+    let temp = await getTemp(
       weatherObj.forecast.forecastday[day].hour[calculatedHour],
       "temp",
     );
@@ -250,69 +251,79 @@ const loadHourlyData = async (weatherObj) => {
     if (currentPageInfo.tempUnit === "f" && temp < 33) {
       // set the chance of snow if below freezing
       hourlyRainArr[i].textContent =
+        "❄️ " +
         (await weatherObj.forecast.forecastday[day].hour[calculatedHour]
-          .chance_of_snow) + "%";
+          .chance_of_snow) +
+        "%";
     } else if (currentPageInfo.tempUnit === "c" && temp < 1) {
       hourlyRainArr[i].textContent =
+        "❄️ " +
         (await weatherObj.forecast.forecastday[day].hour[calculatedHour]
-          .chance_of_snow) + "%";
+          .chance_of_snow) +
+        "%";
     } else {
       // set the chance of rain if above freezing
       hourlyRainArr[i].textContent =
+        "💧 " +
         (await weatherObj.forecast.forecastday[day].hour[calculatedHour]
-          .chance_of_rain) + "%";
+          .chance_of_rain) +
+        "%";
     }
   }
 };
 
 // loads data for the next 3 days
 const loadDailyData = async (weatherObj) => {
-  for (let i = 0; i < 3; i += 1) {
+  for (let i = 0; i < 2; i += 1) {
     // var for starting the index from tomorrow instead of today
     const dayAhead = parseInt(1 + i);
 
     // get the date for tomorrow
     const getDate = await weatherObj.forecast.forecastday[dayAhead].date;
+
     // adjust for the timezone
     const adjustTZ = (await getDate) + "T00:00:00";
+
     // format to new date
     const newDate = new Date(await adjustTZ);
+
     // format to the day of the week
     const formattedDate = format(await newDate, "ccc");
+
     dayOfWeekArr[i].textContent = formattedDate;
 
-    // get day's high and set it to dailyTempHighArr[i]
-    dailyTempHighArr[i].textContent = await setTemp(
+    // max temperature for the day
+    dailyTempHighArr[i].textContent = await getTemp(
       weatherObj.forecast.forecastday[dayAhead].day,
       "maxtemp",
     );
 
-    // get day's low and set it to dailyTempLowArr[i]
-    dailyTempLowArr[i].textContent = await setTemp(
+    // min temperature for the day
+    dailyTempLowArr[i].textContent = await getTemp(
       weatherObj.forecast.forecastday[dayAhead].day,
       "mintemp",
     );
 
-    // get day's icon and set it to dailyIconArr[i]
-    // format icon request by removing URL
+    // get the icon for the day then
+    // format the icon request by removing URL
     let getWeatherIcon = await weatherObj.forecast.forecastday[dayAhead].day
       .condition.icon;
-
     let formattedIcon = await getWeatherIcon.replace(
       "//cdn.weatherapi.com/",
       "",
     );
+    // set the daily icon to the formatted icon
     dailyIconArr[i].setAttribute("src", await formattedIcon);
 
     // set the chance of rain
     dailyRainArr[i].textContent =
-      "💧" +
+      "💧 " +
       (await weatherObj.forecast.forecastday[dayAhead].day
         .daily_chance_of_rain) +
       "%";
 
     // get temperature for that day
-    let temp = await setTemp(
+    let temp = await getTemp(
       weatherObj.forecast.forecastday[dayAhead].day,
       "mintemp",
     );
@@ -320,13 +331,13 @@ const loadDailyData = async (weatherObj) => {
     // Add chance of snow if below freezing that day
     if (currentPageInfo.tempUnit === "f" && temp < 33) {
       dailySnowArr[i].textContent =
-        "❄️" +
+        "❄️ " +
         (await weatherObj.forecast.forecastday[dayAhead].day
           .daily_chance_of_snow) +
         "%";
     } else if (currentPageInfo.tempUnit === "c" && temp < 1) {
       dailySnowArr[i].textContent =
-        "❄️" +
+        "❄️ " +
         (await weatherObj.forecast.forecastday[dayAhead].day
           .daily_chance_of_snow) +
         "%";
@@ -335,8 +346,6 @@ const loadDailyData = async (weatherObj) => {
       dailySnowArr[i].textContent = "";
     }
   }
-
-  // get day's chance of rain OR snow and set it to dailyRainArr[i]
 };
 
 const loadPageData = async (place) => {
@@ -351,5 +360,7 @@ const loadPageData = async (place) => {
 
   // load data for "daily" container
   await loadDailyData(weatherData);
+
+  await loadTheme(weatherData);
 };
 export { loadPageData };

@@ -18,6 +18,12 @@ loadPageData("New York");
 searchBtn.addEventListener("click", async () => {
   await loadPageData(searchInput.value);
 });
+// load page if 'enter' is clicked
+searchInput.addEventListener("keypress", async (event) => {
+  if (event.key === "Enter") {
+    await loadPageData(searchInput.value);
+  }
+});
 
 const currentPageInfo = {
   tempUnit: "",
@@ -33,39 +39,3 @@ toggleTemp.addEventListener("click", () => {
 });
 
 export { currentPageInfo };
-
-/*
-MODULES
-- CurrentWeather
-- HourlyWeather
-- DailyWeather
-- apiFunctions
-- pageFunctions
-- loadPageData
-
-FUNCTIONS
-MODULE: pageFunctions 
-----> createAndApppend
-----> toggleTheme
-----> toggleTemp: function to switch from Fahrenheit to Celsius
-
-MODULE: currentWeather
----->
-
-MODULE: hourlyWeather
----->
-
-MODULE: dailyWeather
----->
-
-MODULE: apiFunctions
-----> getLocation
-
-MODULE: loadPageData
-----> invokes loadCurrentData(), loadHourlyData(), loadDailyData()
-
-
-
-ARRAYS
-
-*/
