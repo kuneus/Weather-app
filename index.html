@@ -15,7 +15,6 @@
     </style>
   </head>
   <body>
-    <div id="app"></div>
     <!-- **** HEADER **** -->
     <header>
       <div class="header">
@@ -33,6 +32,16 @@
       </div>
     </header>
     <!-- **** MAIN **** -->
+    <div id="error-container" style="display: none">
+      <div>
+        <h1>Can't find <span id="failed-search"></span>.</h1>
+        <h2>
+          Make sure you correctly spelled your search and entered a valid city
+          or zipcode. Try adding a region or country after your city for a more
+          specific search. For example: 'City, Region' or 'City, Country'
+        </h2>
+      </div>
+    </div>
     <div id="main">
       <!-- **** CURRENT **** -->
       <div id="current-container">
