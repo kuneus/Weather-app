@@ -93,18 +93,20 @@ video {
 }
 
 :root {
-  --main-bg-color: rgba(202, 202, 202, 0.428);
+  --main-bg-color: rgb(202, 202, 202);
   --searchbar-color: gray;
   --search-btn-color: rgb(107, 107, 107);
   --font-color: black;
+  --footer-font-color: white;
 }
 
 :root.cloudy {
-  --main-bg-color: rgba(202, 202, 202, 0.428);
+  --main-bg-color: rgba(131, 131, 131, 0.599);
   --searchbar-color: gray;
   --search-btn-color: rgb(107, 107, 107);
-  --font-color: black;
+  --font-color: rgb(255, 255, 255);
   --bg-image: url("images/cloudy.png");
+  --footer-font-color: white;
 }
 
 :root.snowing {
@@ -113,6 +115,7 @@ video {
   --search-btn-color: rgb(107, 107, 107);
   --font-color: black;
   --bg-image: url("images/snowing.png");
+  --footer-font-color: white;
 }
 
 :root.sunny {
@@ -121,33 +124,38 @@ video {
   --search-btn-color: rgb(107, 107, 107);
   --font-color: black;
   --bg-image: url("images/sunny.png");
+  --footer-font-color: white;
 }
 
-:root.clear-sky {
+:root.clearSky {
   --main-bg-color: rgba(17, 0, 6, 0.564);
   --searchbar-color: gray;
   --search-btn-color: rgb(107, 107, 107);
   --font-color: rgb(255, 255, 255);
   --bg-image: url("images/clear_sky.png");
+  --footer-font-color: white;
 }
 
 :root.misty {
-  --main-bg-color: rgba(202, 202, 202, 0.428);
+  --main-bg-color: rgba(202, 202, 202, 0.64);
   --searchbar-color: gray;
   --search-btn-color: rgb(107, 107, 107);
   --font-color: black;
   --bg-image: url("images/misty.png");
+  --footer-font-color: white;
 }
 :root.raining {
-  --main-bg-color: rgba(202, 202, 202, 0.428);
+  --main-bg-color: rgba(105, 105, 105, 0.55);
   --searchbar-color: gray;
   --search-btn-color: rgb(107, 107, 107);
-  --font-color: black;
+  --font-color: rgb(255, 255, 255);
   --bg-image: url("images/raining.png");
+  --footer-font-color: white;
 }
 
 body {
   background-image: var(--bg-image);
+  background-repeat: no-repeat;
   background-size: cover;
   font-family: "Calibri Light", sans-serif;
   color: var(--font-color);
@@ -159,18 +167,37 @@ body {
   font-weight: 700;
 }
 
+a {
+  color: rgb(208, 26, 208);
+}
+
 /* ****************** */
 /* <---- HEADER ----> */
 /* ****************** */
 
-header {
+.header {
   display: flex;
   justify-content: space-between;
+
   margin: 20px;
+  /* display: grid;
+  grid-template-columns: 1fr 1fr 1fr; */
+  align-items: center;
+}
+
+.page-title {
+  font-family: "Rostack", sans-serif;
+  font-size: calc(20px + 3vw);
+  width: 25%;
+  display: flex;
+  align-self: center;
+  align-items: center;
 }
 
 #search-container {
   display: flex;
+  height: 30px;
+  width: 50%;
 }
 
 #search-input {
@@ -179,6 +206,8 @@ header {
   text-indent: 5px;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
+  width: clamp(200px 30vw 400px);
+  height: 30px;
 }
 
 #search-btn {
@@ -188,10 +217,15 @@ header {
   background-color: var(--search-btn-color);
 }
 
+#toggle-cont {
+  width: 25%;
+}
+
 #toggle-temp {
   display: flex;
   gap: 15px;
   border-radius: 10px;
+  justify-self: flex-end;
 }
 
 /* **************** */
@@ -311,13 +345,14 @@ header {
 }
 
 #daily-container > div {
-  /* display: flex; */
-  /* flex-direction: column; */
-  /* justify-content: space-between; */
   align-items: center;
   gap: 10px;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+}
+
+.day-of-week {
+  font-size: 1.5rem;
 }
 
 .daily-high-low {
@@ -335,6 +370,33 @@ header {
   font-weight: 300;
 }
 
+.daily-snow-chance {
+  display: none;
+}
 /* ****************** */
 /* <---- FOOTER ----> */
 /* ****************** */
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+  margin-top: 50px;
+  color: var(--footer-font-color);
+}
+
+/* ****************** */
+/* <---- MEDIA ----> */
+/* ****************** */
+@media screen and (max-width: 600px) {
+  .header {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .page-title {
+    font-size: 30px;
+  }
+}

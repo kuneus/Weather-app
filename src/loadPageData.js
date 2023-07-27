@@ -272,7 +272,7 @@ const loadHourlyData = async (weatherObj) => {
   }
 };
 
-// loads data for the next 3 days
+// loads data for the next 2 days
 const loadDailyData = async (weatherObj) => {
   for (let i = 0; i < 2; i += 1) {
     // var for starting the index from tomorrow instead of today
@@ -330,12 +330,14 @@ const loadDailyData = async (weatherObj) => {
 
     // Add chance of snow if below freezing that day
     if (currentPageInfo.tempUnit === "f" && temp < 33) {
+      dailySnowArr[i].style.display = "block";
       dailySnowArr[i].textContent =
         "❄️ " +
         (await weatherObj.forecast.forecastday[dayAhead].day
           .daily_chance_of_snow) +
         "%";
     } else if (currentPageInfo.tempUnit === "c" && temp < 1) {
+      dailySnowArr[i].style.display = "block";
       dailySnowArr[i].textContent =
         "❄️ " +
         (await weatherObj.forecast.forecastday[dayAhead].day
@@ -344,23 +346,28 @@ const loadDailyData = async (weatherObj) => {
     } else {
       // clear content if not below freezing that day
       dailySnowArr[i].textContent = "";
+      dailySnowArr[i].style.display = "none";
     }
   }
 };
 
 const loadPageData = async (place) => {
-  // variable for returned weather data object
-  const weatherData = await getData(place);
+  try {
+    // variable for returned weather data object
+    const weatherData = await getData(place);
 
-  // load data for "current" container
-  await loadCurrentData(weatherData);
+    // load data for "current" container
+    await loadCurrentData(weatherData);
 
-  // load data for "hourly" container
-  await loadHourlyData(weatherData);
+    // load data for "hourly" container
+    await loadHourlyData(weatherData);
 
-  // load data for "daily" container
-  await loadDailyData(weatherData);
+    // load data for "daily" container
+    await loadDailyData(weatherData);
 
-  await loadTheme(weatherData);
+    await loadTheme(weatherData);
+  } catch (error) {
+    console.log("error: " + error);
+  }
 };
 export { loadPageData };

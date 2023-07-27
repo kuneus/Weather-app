@@ -11,22 +11,25 @@
       @import url("https://fonts.cdnfonts.com/css/calibri-light");
       @import url("https://fonts.cdnfonts.com/css/major-mono-display-2");
       @import url("https://fonts.cdnfonts.com/css/istanbul-pro");
+      @import url("https://fonts.cdnfonts.com/css/rostack");
     </style>
   </head>
   <body>
     <div id="app"></div>
     <!-- **** HEADER **** -->
     <header>
-      <div>Weatherest</div>
-      <div id="search-container">
-        <input type="search" id="search-input" placeholder="Enter location" />
-        <button id="search-btn">Search</button>
-      </div>
-      <div>
-        <button id="toggle-temp">
-          <span id="celsius-span">°C</span>
-          <span id="fahrenheit-span">°F</span>
-        </button>
+      <div class="header">
+        <div class="page-title">Weatherest</div>
+        <div id="search-container">
+          <input type="search" id="search-input" placeholder="Enter location" />
+          <button id="search-btn">Search</button>
+        </div>
+        <div id="toggle-cont">
+          <button id="toggle-temp">
+            <span id="celsius-span">°C</span>
+            <span id="fahrenheit-span">°F</span>
+          </button>
+        </div>
       </div>
     </header>
     <!-- **** MAIN **** -->
@@ -215,7 +218,7 @@
       </div>
       <!-- **** DAILY **** -->
       <div id="daily-container">
-        <div>
+        <div class="day-cont">
           <div class="day-of-week"></div>
           <div class="daily-high-low">
             <div class="daily-temp-high temp-unit"></div>
@@ -225,7 +228,7 @@
           <div class="daily-rain-chance"></div>
           <div class="daily-snow-chance"></div>
         </div>
-        <div>
+        <div class="day-cont">
           <div class="day-of-week"></div>
           <div class="daily-high-low">
             <div class="daily-temp-high temp-unit"></div>
@@ -239,10 +242,17 @@
     </div>
     <!-- **** FOOTER **** -->
     <footer>
-      Powered by
-      <a href="https://www.weatherapi.com/" title="Free Weather API">
-        WeatherAPI.com
-      </a>
+      <div>
+        Made by Kuni <a href="https://github.com/kuneus">@Kuneus</a> |
+        <a href="">Source Code</a>
+      </div>
+      <div>
+        Powered by
+        <a href="https://www.weatherapi.com/" title="Free Weather API">
+          WeatherAPI.com
+        </a>
+      </div>
+      <div id="author-credit"></div>
     </footer>
     <script src="bundle.js"></script>
   </body>
