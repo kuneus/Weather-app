@@ -44,7 +44,7 @@ export { currentPageInfo };
 to-do:
 ----> OPTIONAL: add loading screen
 ----> add error page
-----> add background artists
+
 
 STYLE:
 ----> style page title with font and size

@@ -185,7 +185,7 @@ const setTheme = async (weatherObj) => {
 
   // loop through all the weather codes and then change the root class
   // once match is found
-  for (let i = 0; i < 3; i += 1) {
+  for (let i = 0; i < 4; i += 1) {
     let stopLoop = false;
     let condition;
 

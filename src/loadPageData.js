@@ -1,12 +1,13 @@
 /* 
 This module gets and loads all weather data to the DOM
-Get functions retrieve all relevant data
-Load functions load the retrieved data to the DOM
+'Get' functions retrieve all relevant data
+'Load' functions load the retrieved data to the DOM
 
 */
 import format from "date-fns/format";
 import { currentPageInfo } from "./index.js";
 import { changeTempBtn, loadTheme } from "./pageFunctions.js";
+import { loadErrorPage } from "./loadErrorPage.js";
 
 // DOM elements for current data
 const currentLocation = document.getElementById("current-location");
@@ -366,8 +367,13 @@ const loadPageData = async (place) => {
     await loadDailyData(weatherData);
 
     await loadTheme(weatherData);
+
+    // clear error container and display main content
+    loadErrorPage(false);
   } catch (error) {
-    console.log("error: " + error);
+    console.log("error: ");
+
+    loadErrorPage(error);
   }
 };
 export { loadPageData };
