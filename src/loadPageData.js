@@ -53,7 +53,7 @@ const dailySnowArr = Array.from(dailySnow);
 const getData = async (place) => {
   try {
     const response = await fetch(
-      "http://api.weatherapi.com/v1/forecast.json?key=e31a4465ef234c37984155853230907&q=" +
+      "https://api.weatherapi.com/v1/forecast.json?key=e31a4465ef234c37984155853230907&q=" +
         place +
         "&days=7&aqi=no&alerts=no",
       { mode: "cors" },
