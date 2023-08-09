@@ -39,18 +39,3 @@ toggleTemp.addEventListener("click", () => {
 });
 
 export { currentPageInfo };
-
-/*
-to-do:
-----> OPTIONAL: add loading screen
-----> add error page
-
-
-STYLE:
-----> style page title with font and size
-----> style temp unit toggle button
-----> style elements in the Current container
-----> add Made By footer element
-----> add mobile accessibility
-
-*/
