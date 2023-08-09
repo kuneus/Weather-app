@@ -17,6 +17,7 @@ const currentDate = document.getElementById("current-date");
 const tempNow = document.getElementById("temp-now");
 const currentHigh = document.getElementById("current-high");
 const currentLow = document.getElementById("current-low");
+const conditionIcon = document.getElementById("current-condition-icon");
 const currentInfo = document.getElementById("current-info");
 const feelsLike = document.getElementById("feels-like");
 const currentHumidity = document.getElementById("current-humidity");
@@ -171,7 +172,13 @@ const loadCurrentData = async (weatherObj) => {
     "mintemp",
   );
 
+  // get the weather icon for each hour
+  let getWeatherIcon = await weatherObj.current.condition.icon;
+  // format the icon string
+  let formattedIcon = await getWeatherIcon.replace("//cdn.weatherapi.com/", "");
+
   // current condition
+  conditionIcon.setAttribute("src", await formattedIcon);
   currentInfo.textContent = await weatherObj.current.condition.text;
 
   // feels like

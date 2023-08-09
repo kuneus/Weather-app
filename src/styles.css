@@ -117,7 +117,7 @@ video {
   --search-btn-color: rgb(107, 107, 107);
   --font-color: black;
   --bg-image: url("images/snowing.png");
-  --footer-font-color: white;
+  --footer-font-color: black;
   --page-title-color: black;
 }
 
@@ -178,6 +178,11 @@ a {
   color: rgb(208, 26, 208);
 }
 
+svg {
+  height: 35px;
+  width: 35px;
+}
+
 /* ****************** */
 /* <---- HEADER ----> */
 /* ****************** */
@@ -206,6 +211,7 @@ a {
   display: flex;
   height: 30px;
   width: 50%;
+  justify-content: center;
 }
 
 #search-input {
@@ -214,7 +220,7 @@ a {
   text-indent: 5px;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
-  width: clamp(200px 30vw 400px);
+  width: 100%;
   height: 30px;
 }
 
@@ -227,6 +233,8 @@ a {
 
 #toggle-cont {
   width: 25%;
+  display: flex;
+  justify-content: flex-end;
 }
 
 #toggle-temp {
@@ -291,6 +299,18 @@ a {
   background-color: var(--main-bg-color);
 }
 
+#current-container svg {
+  fill: var(--font-color);
+  border-radius: 5px;
+}
+
+#wind-svg svg,
+#wind-svg path,
+#humidity-svg path {
+  fill: none;
+  stroke: var(--font-color);
+}
+
 #current-header {
   display: flex;
   flex-direction: column;
@@ -306,25 +326,33 @@ a {
 
 #current-main {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
 }
 
 #current-display {
   display: grid;
-  grid-template: auto auto auto auto / 120px;
+  grid-template-columns: auto auto;
   align-content: center;
   justify-content: center;
-  padding-right: 20px;
-  gap: 5px;
+  padding: 20px;
+  gap: 20px;
+}
+
+.row {
+  align-items: center;
 }
 
 #today-display {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding-left: 20px;
-  padding-top: 10px;
+  /* display: flex;
+  flex-direction: column; */
+  display: grid;
+  grid-template: 1fr 1fr / 1fr 1fr 1fr;
+  gap: 20px;
+  padding: 20px;
+  /* justify-content: space-between; */
+  /* align-items: center; */
+  /* padding-left: 20px;
+  padding-top: 10px; */
 }
 
 #temp-now {
@@ -337,7 +365,14 @@ a {
 
 #current-highlow {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+  gap: 30px;
+}
+
+/* for each row in current container */
+.row {
+  display: flex;
+  gap: 15px;
 }
 
 /* <---- HOURLY INFO ----> */
@@ -373,13 +408,17 @@ a {
   gap: 10px;
 }
 
+.current-label {
+  font-family: "ABCYa", sans-serif;
+}
+
 /* <---- DAILY INFO ----> */
 #daily-container {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   width: 50%;
-
+  gap: 20px;
   border-radius: 15px;
   padding: 20px;
   background-color: var(--main-bg-color);
@@ -441,8 +480,24 @@ footer {
     font-size: 30px;
   }
 
-  #current-main {
+  #current-main,
+  #current-display,
+  #today-display {
     display: flex;
+    flex-direction: column;
+  }
+
+  #daily-container {
+    gap: 30px;
+  }
+
+  #daily-container > div {
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+  }
+
+  footer {
     flex-direction: column;
   }
 }
