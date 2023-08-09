@@ -1,33 +1,23 @@
-# weather-app
+# Weatherest
 
-Empty project.
+🔗 Live link: https://kuneus.github.io/Weather-app/
 
-## Building and running on localhost
+This is the Weather App assignment as part of The Odin Project curriculum. The goal of this project was to create a weather application using async functions.
 
-First install dependencies:
+# ⚙️ Built with ⚙️
 
-```sh
-npm install
-```
+- HTML 5
+- CSS 3
+- Javascript ES6
+- Webpack
+- Date-fns package
+- WeatherAPI
 
-To create a production build:
+# ✧ Features ✧
 
-```sh
-npm run build-prod
-```
-
-To create a development build:
-
-```sh
-npm run build-dev
-```
-
-## Running
-
-```sh
-node dist/bundle.js
-```
-
-## Credits
-
-Made with [createapp.dev](https://createapp.dev/)
+- Find weather for location based on zipcode, city, region, or country
+- Displays current temperature and condition, day's high and low temperature, chance of rain, feels like, wind, humidity, and UV index
+- Displays 24-hour temperature, condition, and chance of rain or snow depending on temperature
+- Display weather for the next two days including high/low temperature, chance of rain or snow, and condition
+- Toggle between celsius/fahrenheit and mph/kph
+- Change background photo based on current condition
